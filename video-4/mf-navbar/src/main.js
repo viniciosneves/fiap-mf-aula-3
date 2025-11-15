@@ -98,6 +98,18 @@ export function render(container, options = {}) {
       }
     })
   }
+
+  // Escutar eventos do Event Bus (se disponível)
+  const eventBus = window.__eventBus
+  if (eventBus) {
+    eventBus.on('mf:auth:login', (data) => {
+      console.log('Navbar: usuário logou', data)
+    })
+
+    eventBus.on('mf:auth:logout', () => {
+      console.log('Navbar: usuário deslogou')
+    })
+  }
 }
 
 // Method to update active link (can be called from outside)

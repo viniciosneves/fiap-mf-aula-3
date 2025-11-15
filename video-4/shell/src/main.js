@@ -1,4 +1,5 @@
 import './style.css'
+import { eventBus } from './eventBus'
 
 // State management (preparado para event bus)
 const state = {
@@ -49,6 +50,9 @@ function showLogin() {
   state.isAuthenticated = false
   state.user = null
   
+  // Publicar evento de logout
+  eventBus.emit('mf:auth:logout')
+  
   // Update navbar to show login button
   if (navbarModule && navbarContainer) {
     renderNavbar()
@@ -96,6 +100,9 @@ function showApp(user) {
   appScreen.classList.remove('hidden')
   state.isAuthenticated = true
   state.user = user
+  
+  // Publicar evento de login
+  eventBus.emit('mf:auth:login', { email: user.email })
   
   // Render navbar with user info
   renderNavbar()
